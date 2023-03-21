@@ -1,0 +1,753 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "UserPost demo API",
+        "description": "Node.js and Express.js Application API",
+        "license": {
+            "name": "Post",
+            "url": "https://post.com/"
+        }
+    },
+    "tags": [
+        {
+            "name": "User"
+        },
+        {
+            "name": "Post"
+        },
+        {
+            "name": "Admin"
+        }
+    ],
+    "consumes": [
+        "application/json",
+        "multipart/form-data"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "securityDefinitions": {
+        "jwt": {
+            "type": "apiKey",
+            "in": "cookie",
+            "name": "token"
+        }
+    },
+    "security": [
+        {
+            "jwt": []
+        }
+    ],
+
+    "paths": {
+        "/insertuser": {
+            "post": {
+              "tags": ["User"],
+              "summary": "Signup API",
+              "security" : [],
+              "parameters": [
+                {
+                  "name": "user",
+                  "in": "body",
+                  "description": "Create new account",
+                  "schema": {
+                    "allOf":[
+                      {
+                        "$ref": "#/definitions/SignUp"
+                      }
+                    ]
+                  }
+                }
+              ],
+              "produces": ["application/json"],
+              "responses": {
+                "200": {
+                  "description": "Create new Account",
+                  "schema": {
+                    "allOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "status"  : { "type": "boolean"},
+                          "data"    : { 
+                            "type": "object",
+                            "properties": {
+                              "_id" : { "type" : "string"},
+                              "fullname" : { "type" : "string"},
+                              "username" : { "type" : "string"},
+                              "email"    : { "type" : "string"},
+                              "password" : { "type" : "string"}
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+        },
+
+        "/loginuser":{
+          "post":{
+            "tags":["User"],
+              "summary":"Login API",
+              "security" : [],
+              "parameters": [
+                { 
+                  "name": "user",
+                  "in": "body",
+                  "description": "Login account",
+                  "schema": {
+                    "type": "object",
+                    "required"  : ["email", "password"],
+                    "properties": {
+                      "email"     : { "type": "string"},
+                     "password"  : { "type": "string"}
+                    }
+                  }
+                }
+              ],
+              "produces":["application/json"],
+              "responses": {
+                "200": {
+                  "description": "Login account",
+                  "schema": {
+                    "allOf": [
+                      {
+                        "$ref": "#/definitions/LoginResponse"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+        },
+
+        "/":{
+          "get":{
+            "tags": ["Post"],
+            "summary": "Get all post",
+            "security":[],
+            "responses":{
+              "200":{
+                "description" : "Get all Posts",
+                "schema" : {
+                  "allOf" : [
+                    {
+                      "type" : "object",
+                      "properties" :{
+                        "_id"      :{ "type" : "string"},
+                        "user"     :{
+                          "type"       : "object",
+                          "properties" : {
+                            "_id  "      : { "type" : "string"},
+                            "fullname" : { "type" : "string"},
+                            "email" : { "type" : "string" }
+                          }
+                        }
+                      }
+                    } 
+                  ] 
+                }
+              }
+            }
+          }
+        },
+
+        "/updateuser/{id}":{
+          "parameters":[
+            {
+              "name":"id",
+              "in":"path",
+              "required":true,
+              "description":"ID of User",
+              "type":"string"
+            }
+          ],
+          "post":{
+            "tags":["User"],
+            "summary":"Update UserProfile",
+            "parameters":[
+              {
+                "in"          : "body",
+                "name"        : "user",
+                "description" : "Update user Profile",
+                "schema":{
+                  "allOf" :[
+                    {
+                      "$ref":"#/definitions/Profile"
+                    },
+                    {
+                      "type" : "object",
+                      "required" : ["fullname","username","email"]
+                    }
+                  ]
+                }
+              }
+            ],
+            "produces":["application/json"],
+            "responses":{
+              "200":{
+                "description":"Update UserProfile",
+                "schema":{
+                  "allOf":[
+                    {
+                      "type":"object",
+                      "properties":{
+                        "status":{"type" : "boolean"},
+                        "data":{
+                          "allof":[
+                            {"$ref": "#/definitions/Profile"},
+                            {
+                              "type":"object",
+                              "properties":{
+                                "_id"  : { "type" : "string"},
+                                "user" : { "type" : "string"}
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        
+        "/post/addpost":{
+          "post":{
+            "tags":["Post"],
+            "summary":"Create New Post",
+            "parameters":[
+              {
+                "in"          : "formData",
+                "name"        : "file",
+                "type"        : "file",
+                "description" : "file to be upload",
+                "schema":{
+                  "allOf" :[
+                    {
+                      "$ref":"#/definitions/Post"
+                    },
+                    {
+                      "type" : "object",
+                      "required" : ["image"]
+                    }
+                  ]
+                }
+              },
+              {
+                "in"          :  "formData",
+                "name"        :  "title",  
+                "type"        :  "string",
+                "description" :  "title of file content",
+                "schema":{
+                  "allOf" :[
+                    {
+                      "$ref":"#/definitions/Post"
+                    },
+                    {
+                      "type" : "object",
+                      "required" : ["title"]
+                    }
+                  ]
+                }
+              },
+              {
+                "in"          :  "formData",
+                "name"        :  "description",  
+                "type"        :  "string",
+                "description" : "content of file content",
+                "schema":{
+                  "allOf" :[
+                    {
+                      "$ref":"#/definitions/Post"
+                    },
+                    {
+                      "type" : "object",
+                      "required" : ["content"]
+                    }
+                  ]
+                }
+              }
+            
+            ],
+            "produces" : ["application/json"],
+            "responses" :{
+              "200":{
+                "description":"Create new Post",
+                "schema":{
+                  "allOf":[
+                    {
+                      "type":"object",
+                      "properties":{
+                        "status" : { "type" : "boolean"},
+                        "data":{
+                          "allof":[
+                            {"$ref":"#/definitions/Post"},
+                            {
+                              "type" : "object",
+                              "properties":{
+                                "_id"         : {"type" : "string"}
+                              } 
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+
+        },
+
+        "/mypost/{id}":{
+          "parameters":[
+            {
+              "name":"id",
+              "in":"path",
+              "required":true,
+              "description":"ID of Post",
+              "type":"string"
+            }
+          ],
+          "get":{
+            "tags":["Post"],
+            "summary":"Get Post By id",
+            "responses":{
+              "200":{
+                "description":"Get Post by Id",
+                "schema":{
+                  "allOf":[
+                    {
+                      "type":"object",
+                      "properties":{
+                        "status":{"type" : "boolean"},
+                        "data":{
+                          "allof":[
+                            {"$ref":"#/definitions/Post"},
+                            {
+                              "type":"object",
+                              "user":{
+                                "type":"object",
+                                "properties":{
+                                  "_id":{"type":"string"},
+                                  "fullname":{"type":"string"},
+                                  "username":{"type":"string"}
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        
+        "/post/deletepost/{id}":{
+          "parameters":[
+            {
+              "name":"id",
+              "in":"path",
+              "required":true,
+              "description":"ID of Post",
+              "type":"string"
+            }
+          ],
+          "get":{
+            "tags":["Post"],
+            "summary":"Delete Post by ID",
+            "responses":{
+              "200":{
+                "description":"Delete Post by ID",
+                "schema":{
+                  "allOf":[
+                    {
+                      "type":"object",
+                      "properties":{
+                        "status"  : { "type" : "boolean"},
+                        "message" : { "type" : "string"}
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+
+        "/post/updatepost/{id}":{
+          "parameters":[
+            {
+              "name":"id",
+              "in":"path",
+              "required":true,
+              "description":"ID of Post",
+              "type":"string"
+            }
+          ],
+          "post":{
+            "tags":["Post"],
+            "summary":"Update Post by ID",
+            "parameters":[
+              {
+                "in"          : "formData",
+                "name"        : "file",
+                "type"        : "file",
+                "description" : "file to be upload",
+                "schema":{
+                  "allOf" :[
+                    {
+                      "$ref":"#/definitions/Post"
+                    },
+                    {
+                      "type" : "object",
+                      "required" : ["image"]
+                    }
+                  ]
+                }
+              },
+              {
+                "in"          :  "formData",
+                "name"        :  "title",  
+                "type"        :  "string",
+                "description" :  "title of file content",
+                "schema":{
+                  "allOf" :[
+                    {
+                      "$ref":"#/definitions/Post"
+                    },
+                    {
+                      "type" : "object",
+                      "required" : ["title"]
+                    }
+                  ]
+                }
+              },
+              {
+                "in"          :  "formData",
+                "name"        :  "description",  
+                "type"        :  "string",
+                "description" : "content of file content",
+                "schema":{
+                  "allOf" :[
+                    {
+                      "$ref":"#/definitions/Post"
+                    },
+                    {
+                      "type" : "object",
+                      "required" : ["content"]
+                    }
+                  ]
+                }
+              }
+            ],
+            "produces":["application/json"],
+            "responses":{
+              "200":{
+                "description":"Update Post by ID",
+                "schema":{
+                  "allOf":[
+                    {
+                      "type":"object",
+                      "properties":{
+                        "status":{"type" : "boolean"},
+                        "data":{
+                          "allof":[
+                            {"$ref": "#/definitions/Post"},
+                            {
+                              "type":"object",
+                              "properties":{
+                                "_id"  : { "type" : "string"},
+                                "user" : { "type" : "string"}
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+
+        "/post/addcomment/{id}":{
+          "parameters":[
+            {
+              "name":"id",
+              "in":"path",
+              "required":true,
+              "description":"ID of Post",
+              "type":"string"
+            }
+          ],
+          "post":{
+            "tags":["Post"],
+            "summary":"Add Comment for Post",
+            "parameters":[
+              {
+                "in"          : "body",
+                "name"        : "comment",
+                "type"        : "string",
+                "description" : "add comment on post",
+                "schema":{
+                  "allOf" :[
+                    {
+                      "$ref":"#/definitions/Comment"
+                    },
+                    {
+                      "type" : "object",
+                      "required" : ["comment"]
+                    }
+                  ]
+                }
+              }
+            ],
+            "produces":["application/json"],
+            "responses":{
+              "200":{
+                "description":"Update comment Post by ID",
+                "schema":{
+                  "allOf":[
+                    {
+                      "type":"object",
+                      "properties":{
+                        "status":{"type" : "boolean"},
+                        "data":{
+                          "allof":[
+                            {"$ref": "#/definitions/Post"},
+                            {
+                              "type":"object",
+                              "properties":{
+                                "_id"  : { "type" : "string"},
+                                "user" : { "type" : "string"}
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+
+        "/post/delete/{id}":{
+          "parameters":[
+            {
+              "name":"id",
+              "in":"path",
+              "required":true,
+              "description":"ID of PostComment",
+              "type":"string"
+            }
+          ],
+          "get":{
+            "tags":["Post"],
+            "summary":"Delete Comment by ID",
+            "responses":{
+              "200":{
+                "description":"Delete comment by ID",
+                "schema":{
+                  "allOf":[
+                    {
+                      "type":"object",
+                      "properties":{
+                        "status"  : { "type" : "boolean"},
+                        "message" : { "type" : "string"}
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+
+        "/admin/alluser":{
+          "get":{
+            "tags": ["Admin"],
+            "summary": "Get all User",
+            "security":[],
+            "responses":{
+              "200":{
+                "description" : "Get all User",
+                "schema" : {
+                  "allOf" : [
+                    {
+                      "type" : "object",
+                      "properties" :{
+                        "_id"      :{ "type" : "string"},
+                        "user"     :{
+                          "type"       : "object",
+                          "properties" : {
+                            "_id  "      : { "type" : "string"},
+                            "fullname" : { "type" : "string"},
+                            "email" : { "type" : "string" }
+                          }
+                        }
+                      }
+                    } 
+                  ] 
+                }
+              }
+            }
+          }
+        },
+
+        "/admin/makeadmin/{id}":{
+          "parameters":[
+            {
+              "name":"id",
+              "in":"path",
+              "required":true,
+              "description":"Make Admin",
+              "type":"string"
+            }
+          ],
+          "get":{
+            "tags":["Admin"],
+            "summary":"Make Admin",
+            "responses":{
+              "200":{
+                "description":"Make Admin",
+                "schema":{
+                  "allOf":[
+                    {
+                      "type":"object",
+                      "properties":{
+                        "status":{"type" : "boolean"},
+                        "data":{
+                          "allof":[
+                            {"$ref":"#/definitions/Profile"},
+                            {
+                              "type":"object",
+                              "user":{
+                                "type":"object",
+                                "properties":{
+                                  "_id":{"type":"string"},
+                                  "fullname":{"type":"string"},
+                                  "username":{"type":"string"}
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+
+        "/admin/removeadmin/{id}":{
+          "parameters":[
+            {
+              "name":"id",
+              "in":"path",
+              "required":true,
+              "description":"Remove Admin",
+              "type":"string"
+            }
+          ],
+          "get":{
+            "tags":["Admin"],
+            "summary":"Remove Admin",
+            "responses":{
+              "200":{
+                "description":"Remove Admin",
+                "schema":{
+                  "allOf":[
+                    {
+                      "type":"object",
+                      "properties":{
+                        "status":{"type" : "boolean"},
+                        "data":{
+                          "allof":[
+                            {"$ref":"#/definitions/Profile"},
+                            {
+                              "type":"object",
+                              "user":{
+                                "type":"object",
+                                "properties":{
+                                  "_id":{"type":"string"},
+                                  "fullname":{"type":"string"},
+                                  "username":{"type":"string"}
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+    },
+
+    "definitions": {
+      "SignUp": {
+        "required"  : ["fullname", "username", "email", "password"],
+        "properties": {
+          "fullname" : { "type"  : "string" },
+          "username"  : { "type"  : "string" },
+          "email"     : { "type"  : "string" },
+          "password"  : { "type"  : "string" }
+        }
+      },
+      "Profile": {
+        "required"  : ["fullname", "username", "email"],
+        "properties": {
+          "fullname" : { "type"  : "string" },
+          "username"  : { "type"  : "string" },
+          "email"     : { "type"  : "string" }
+        }
+      },
+      "LoginResponse":{
+        "properties":{
+          "fullname" : { "type" : "string"},
+          "username" : { "type" : "string" },
+          "email"    : { "type" : "string" },
+          "token"    : { "type" : "string" },
+          "role"     : { 
+                        "type"           : "object",
+                         "properties"    : {
+                            "_id"        : { "type" : "string"},
+                            "rolename"   : { "type" : "string"}
+                         }                         
+                        },
+          "_id"       : { "type" : "string"}
+        }
+      },
+      "Post": {
+        "properties" : {
+          "title"         :{ "type" : "string"},
+          "description"   :{ "type" : "string"}
+        }
+      },
+      "Comment": {
+        "properties" : {
+          "comment"        :{ "type" : "string"}
+        }
+      }
+    }
+}

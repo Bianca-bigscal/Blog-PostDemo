@@ -1,0 +1,155 @@
+<html>
+
+<head>
+    <title>displaypost</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            background-color: cornflowerblue;
+            margin-top: 20px;
+        }
+
+        .card {
+            background: #fff;
+            transition: .5s;
+            border: 0;
+            margin-top: 10px;
+            margin-bottom: 30px;
+            border-radius: .55rem;
+            position: relative;
+            width: 80%;
+            height: 95%;
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
+        }
+
+        .card .header {
+            color: #444;
+            padding: 20px;
+            position: relative;
+            box-shadow: none;
+        }
+
+        .card .body {
+            color: #444;
+            padding: 20px;
+            font-weight: 400;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: auto auto auto;
+            gap: 0px;
+            -webkit-transition: all .4s ease;
+            transition: all .4s ease
+        }
+
+        .single_post {
+            -webkit-transition: all .4s ease;
+            transition: all .4s ease
+        }
+
+        .single_post .body {
+            padding: 30px
+        }
+
+        .single_post .img-post {
+            position: relative;
+            overflow: hidden;
+            max-height: 500px;
+            margin-bottom: 30px;
+            display: grid;
+            grid-template-columns: auto auto auto;
+        }
+
+        .single_post .img-post>img {
+            -webkit-transform: scale(1);
+            -ms-transform: scale(1);
+            transform: scale(1);
+            opacity: 1;
+            -webkit-transition: -webkit-transform .4s ease, opacity .4s ease;
+            transition: transform .4s ease, opacity .4s ease;
+            max-width: 100%;
+            filter: none;
+            -webkit-filter: grayscale(0);
+            -webkit-transform: scale(1.01)
+        }
+
+        .single_post button {
+            height: 35px;
+            width: 65px;
+            background-color: cadetblue;
+            border-radius: 4px;
+            font-size: large;
+        }
+
+
+        .single_post h3 {
+            font-size: 20px;
+            text-transform: uppercase;
+        }
+
+        .single_post p {
+            font-size: 16px;
+            line-height: 26px;
+            font-weight: 300;
+            margin: 0
+        }
+
+        .single_post h4 {
+            display: inline;
+            padding: 15px;
+        }
+
+        .comment-reply h5 {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="main-content" class="blog-page">
+        <div class="container">
+            <div class="row clearfix">
+                <div class="col-lg-8 col-md-12 left-box">
+
+                    <div class="main-content">
+
+                        <%data.forEach(function(item){%>
+
+                            <div class="card single_post">
+                                <div class="body">
+                                    <div class="img-post">
+                                        <a href="/post/getsinglepost/<%=item.id%>"><img src="/uploads/<%= item.image%>"
+                                                height="150px" width="150px" alt="blog image" /></a>
+                                        <button><a href="/post/update/<%=item.id%>">Edit</a></button>
+                                        <button><a href="/post/deletepost/<%=item.id%>">Delete</a></button>
+                                    </div>
+                                    <h4>
+                                        <%= item.userIDFK.fullName%>
+                                    </h4>
+                                    <h4>
+                                        <%= item.userIDFK.email%>
+                                    </h4>
+                                    <h3>
+                                        <%= item.title%>
+                                    </h3>
+                                    <p>
+                                        <%= item.content%>
+                                    </p>
+                                </div>
+                            </div>
+                            <%})%>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

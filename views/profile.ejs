@@ -1,0 +1,157 @@
+<html>
+
+<head>
+    <title>Insert login</title>
+    <style>
+          body {
+            background-color: cornflowerblue;
+            margin-top: 20px;
+        }
+        .card1 {
+            background: #fff;
+            transition: .5s;
+            border: 0;
+            margin-bottom: 30px;
+            border-radius: .55rem;
+            position: relative;
+            width: 100%;
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
+        }
+
+        .card1 .header1 {
+            color: #444;
+            padding: 20px;
+            margin-left: 50%;
+            position: relative;
+            box-shadow: none;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .main-content {
+            display: grid;
+            grid-template-columns: auto auto auto;
+            gap: 0px;
+            -webkit-transition: all .4s ease;
+            transition: all .4s ease
+        }
+
+        .form {
+            height: 40%;
+            width: 100%;
+            background-color: white;
+            background: rgba(#13232f, .9);
+            padding: 40px;
+            max-width: 600px;
+            margin: 40px auto;
+            border-radius: 4px;
+            box-shadow: 0 4px 10px 4px rgba(#13232f, .3);
+        }
+
+        .id h1 {
+            margin-left: 10%;
+            margin-top: 5px;
+            display: inline;
+        }
+
+        .header1 button {
+            background-color: orange;
+            margin-left: 45px;
+            margin-bottom: 35px;
+            border-radius: 4px;
+            font-size: large;
+            display: inline;
+        }
+
+        .field-wrap {
+            position: relative;
+            margin-bottom: 40px;
+        }
+
+        .wrap {
+            margin-left: 15px;
+        }
+
+        .button-block {
+            display: block;
+            width: 100%;
+        }
+
+        input[type=submit] {
+            border: 0;
+            outline: none;
+            border-radius: 5px;
+            padding: 20px 0;
+            font-size: 2rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: .1em;
+            background: darkcyan;
+            color: #ffffff;
+            transition: all.5s ease;
+        }
+
+        p {
+            text-align: center;
+            font-size: large;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="main-content" class="blog-page">
+        <div class="container">
+            <div class="row clearfix">
+                <div class="col-lg-8 col-md-12 left-box">
+                    <div class="card1">
+                        <div class="header1">
+                            <center>
+                                <h1>Update User Profile</h1>
+                            </center>
+                            <span><button><a href="/mypost/<%=data._id %>">My Post</a></button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form">
+                    <div class="tab-content">
+                        <div id="signup">
+                            <form method="POST" action="/updateuser/<%=data._id %>">
+
+                                <div class="field-wrap">
+                                    <div class="wrap">
+
+                                        <label class="form-label" for="fullName"> FullName:</label><br />
+                                        <input type="text" name="fullname" value="<%= data.fullName%>" /><br /><br />
+                                    </div>
+                                </div>
+
+                                <div class="field-wrap">
+                                    <div class="wrap">
+
+                                        <label class="form-label" for="userName">UserName:</label><br />
+                                        <input type="text" name="username" value="<%= data.userName%>" /><br /><br />
+                                    </div>
+                                </div>
+
+                                <div class="field-wrap">
+                                    <div class="wrap">
+
+                                        <label class="form-label" for="email">Email:</label><br />
+                                        <input type="text" name="email" value="<%= data.email%>" /><br /><br />
+                                    </div>
+                                </div>
+
+                                <input type="submit" class="button-block" />
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,251 @@
+<html>
+
+<head>
+    <title>displaypost</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            background-color: cornflowerblue;
+            margin-top: 20px;
+        }
+
+        .card {
+            background: #fff;
+            transition: .5s;
+            border: 0;
+            margin-top: 10px;
+            margin-bottom: 30px;
+            border-radius: .55rem;
+            position: relative;
+            width: 80%;
+            height: 100%;
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
+        }
+
+        .card .header {
+            color: #444;
+            padding: 20px;
+            position: relative;
+            box-shadow: none;
+        }
+
+
+        .card1 {
+            background: #fff;
+            transition: .5s;
+            border: 0;
+            margin-bottom: 30px;
+            border-radius: .55rem;
+            position: relative;
+            width: 100%;
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
+        }
+
+        .card1 .header1 {
+            color: #444;
+            padding: 20px;
+            margin-left: 40%;
+            position: relative;
+            box-shadow: none;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .card .body {
+            color: #444;
+            padding: 20px;
+            font-weight: 400;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: auto auto auto;
+            gap: 0px;
+            -webkit-transition: all .4s ease;
+            transition: all .4s ease
+        }
+
+        .single_post {
+            -webkit-transition: all .4s ease;
+            transition: all .4s ease
+        }
+
+        .single_post .body {
+            padding: 30px
+        }
+
+        .single_post .img-post {
+            position: relative;
+            overflow: hidden;
+            max-height: 500px;
+            margin-bottom: 30px;
+        }
+
+        .single_post .img-post>img {
+            -webkit-transform: scale(1);
+            -ms-transform: scale(1);
+            transform: scale(1);
+            opacity: 1;
+            -webkit-transition: -webkit-transform .4s ease, opacity .4s ease;
+            transition: transform .4s ease, opacity .4s ease;
+            max-width: 100%;
+            filter: none;
+            -webkit-filter: grayscale(0);
+            -webkit-transform: scale(1.01)
+        }
+
+        .single_post h3 {
+            font-size: 20px;
+            text-transform: uppercase
+        }
+
+        .single_post h4 {
+            float: right;
+            width: 33.33%;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .single_post p {
+            font-size: 16px;
+            line-height: 26px;
+            font-weight: 300;
+            margin: 0
+        }
+
+        .card5 {
+            background: white;
+            transition: .5s;
+            border: 0;
+            margin-top: 20px;
+            border-radius: .55rem;
+            position: relative;
+            width: 100%;
+            overflow: scroll;
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
+        }
+
+
+        .comment-card.card-body {
+            background-color: cornflowerblue;
+            height: 100px;
+            margin-top: 20px;
+            margin-left: 10px;
+            margin-right: 10px;
+            border-radius: 15px;
+        }
+
+        .comment-card.card-body p {
+            margin-left: 25px;
+            margin-top: 5px;
+        }
+
+        .comment-card.card-body button {
+            float: right;
+            display: inline;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="main-content" class="blog-page">
+        <div class="container">
+            <div class="row clearfix">
+                <div class="col-lg-8 col-md-12 left-box">
+                    <div class="card1">
+                        <div class="header1">
+                            <center>
+                                <h1>Single PostData</h1>
+                            </center>
+                            <span>
+                                <h4>
+                                    <%= data.userIDFK.fullName%>
+                                </h4><br />
+                                <button><a href="/post/addpost">AddPost</a></button><br /><br />
+                                <button><a href="/logout">Logout</a></button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="main-content">
+                        <div class="card single_post">
+                            <div class="body">
+                                <div class="img-post">
+                                    <img src="/uploads/<%= data.image%>" height="150px" width="150px"
+                                        alt="blog image" />
+                                    <span>
+                                        <h4>
+                                            <%= data.userIDFK.fullName%>
+                                        </h4>
+                                        <h4>
+                                            <%= data.userIDFK.email%>
+                                        </h4>
+                                    </span>
+                                </div>
+                                <h3>
+                                    <%= data.title%>
+                                </h3>
+                                <p>
+                                    <%= data.content%>
+                                </p>
+                            </div>
+
+
+                            <div class="header">
+                                <h2>Comments</h2>
+                            </div>
+                            <div class="comment-reply list-unstyled">
+                                <div class="row clearfix">
+                                    <form action="/post/addcomment/<%=data._id%>" method="POST">
+
+                                        <div class="row mb-4">
+                                            <div class="col">
+                                                <div class="form-outline">
+                                                    <input type="text" name="comment"
+                                                        placeholder="wrie you comments" /><br /><br />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <input type="submit" />
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card5 single_post">
+                            <%data.postcomment.forEach(function(item){%>
+
+                                <%if(!item.isDeleted){%>
+
+                                    <div class="comment-card">
+                                        <div class="comment-card card-body">
+                                            <p>
+                                                <%=item.userIDFK.userName%>
+                                            </p>
+                                            <p>
+                                                <%=item.comment%>
+                                            </p>
+                                            <p>
+                                                <%=item.createdAt%>
+                                            </p>
+                                            <a href="/post/delete/<%=item.id%>"><button>Delete</button></a>
+                                        </div>
+                                    </div>
+                                    <%}%>
+                            <%})%>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

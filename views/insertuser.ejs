@@ -1,0 +1,97 @@
+<html>
+
+<head>
+    <title>Insert login</title>
+    <style>
+        .form {
+            height: 70%;
+            width: 100%;
+            background-color: cornflowerblue;
+            background: rgba(#13232f, .9);
+            padding: 40px;
+            max-width: 600px;
+            margin: 40px auto;
+            border-radius: 4px;
+            box-shadow: 0 4px 10px 4px rgba(#13232f, .3);
+        }
+
+        .id h1 {
+            margin-left: 45%;
+            margin-top: 5px;
+        }
+
+        .field-wrap {
+            position: relative;
+            margin-bottom: 40px;
+        }
+
+        .button-block {
+            display: block;
+            width: 100%;
+        }
+
+        input[type=submit] {
+            border: 0;
+            outline: none;
+            border-radius: 0;
+            padding: 20px 0;
+            font-size: 2rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: .1em;
+            background: darkcyan;
+            color: #ffffff;
+            transition: all.5s ease;
+        }
+
+        p {
+            text-align: center;
+            font-size: large;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="form">
+        <div class="tab-content">
+            <div class="id">
+                <h1>Insert Form</h1>
+            </div>
+            <div id="signup">
+
+                <form method="POST" action="/insertuser">
+
+                    <div class="field-wrap">
+                        <label class="form-label" for="fullName"> FullName:</label></br>
+                        <input type="text" name="fullname" /><br /><br />
+                    </div>
+
+                    <div class="field-wrap">
+                        <label class="form-label" for="userName">UserName:</label></br>
+                        <input type="text" name="username" /><br /><br />
+                    </div>
+
+                    <div class="field-wrap">
+                        <label class="form-label" for="email">Email:</label></br>
+                        <input type="text" name="email" /><br /><br />
+                    </div>
+
+                    <div class="field-wrap">
+                        <label class="form-label" for="password">Password:</label></br>
+                        <input type="password" name="password" /><br /><br />
+                    </div>
+
+                    <div class="field-wrap">
+                        <label class="form-label" for="confirmpassword"> ConfirmPassword:</label></br>
+                        <input type="password" name="confirmpassword" /><br /><br />
+                    </div>
+
+                    <input type="submit" class="button-block"/>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,88 @@
+<html>
+
+<head>
+    <title>Insert AdminPost</title>
+    <style>
+        .form {
+            height: 50%;
+            width: 100%;
+            background-color: cornflowerblue;
+            background: rgba(#13232f, .9);
+            padding: 40px;
+            max-width: 600px;
+            margin: 40px auto;
+            border-radius: 4px;
+            box-shadow: 0 4px 10px 4px rgba(#13232f, .3);
+        }
+
+        .id h1 {
+            margin-left: 45%;
+            margin-top: 5px;
+        }
+
+        .field-wrap {
+            position: relative;
+            margin-bottom: 40px;
+        }
+
+        .button-block {
+            display: block;
+            width: 100%;
+        }
+
+        input[type=submit] {
+            border: 0;
+            outline: none;
+            border-radius: 5px;
+            margin-top: 0%;
+            padding: 15px 0;
+            font-size: 2rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: .1em;
+            background: darkcyan;
+            color: #ffffff;
+            transition: all.5s ease;
+        }
+
+        p {
+            text-align: center;
+            font-size: large;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="form">
+        <div class="tab-content">
+            <div class="id">
+                <h1>Add Post</h1>
+            </div>
+            <div id="signup">
+
+                <form method="POST" action="/admin/addpost" enctype="multipart/form-data">
+
+                    <div class="field-wrap">
+                        <label class="form-label" for="title"> title:</label></br>
+                        <input type="text" name="title" /><br /><br />
+                    </div>
+
+                    <div class="field-wrap">
+                        <label class="form-label" for="content">Descriptiion:</label></br>
+                        <textarea name="description" rows="4" cols="20"></textarea><br/><br/>
+                    </div>
+
+                    <div class="field-wrap">
+                        <label class="form-label" for="image">Image:</label></br>
+                        <input type="file" name="file" /><br /><br />
+                    </div>
+
+                    <center><input type="submit" class="btn btn-primary btn-block mb-4"/></center>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

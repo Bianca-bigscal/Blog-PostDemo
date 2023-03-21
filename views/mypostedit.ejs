@@ -1,0 +1,110 @@
+<html>
+
+<head>
+    <title>Update Post</title>
+    <style>
+        .form {
+            height: 60%;
+            width: 100%;
+            background-color: cornflowerblue;
+            background: rgba(#13232f, .9);
+            padding: 40px;
+            max-width: 600px;
+            margin: 40px auto;
+            border-radius: 4px;
+            box-shadow: 0 4px 10px 4px rgba(#13232f, .3);
+        }
+
+        .id h1 {
+            margin-left: 30%;
+            margin-top: 5px;
+            display: inline;
+        }
+
+        .id button {
+            background-color: blueviolet;
+            margin-left: 45px;
+            margin-bottom: 35px;
+            border-radius: 4px;
+            font-size: large
+        }
+
+        .field-wrap {
+            position: relative;
+            margin-bottom: 40px;
+        }
+
+        .wrap {
+            margin-left: 15px;
+        }
+
+        .button-block {
+            display: block;
+            width: 100%;
+        }
+
+        input[type=submit] {
+            border: 0;
+            outline: none;
+            border-radius: 0;
+            padding: 20px 0;
+            font-size: 2rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: .1em;
+            background: darkcyan;
+            color: #ffffff;
+            transition: all.5s ease;
+        }
+
+        p {
+            text-align: center;
+            font-size: large;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="form">
+        <div class="tab-content">
+            <div class="id">
+                <h1>Update UserPost</h1>
+
+            </div>
+            <div id="signup">
+
+                <form method="POST" action="/post/updatepost/<%=data._id %>" enctype="multipart/form-data">
+
+                    <div class="field-wrap">
+                        <div class="wrap">
+
+                            <label class="form-label" for="title"> Title:</label><br />
+                            <input type="text" name="title" value="<%= data.title%>" /><br /><br />
+                        </div>
+                    </div>
+
+                    <div class="field-wrap">
+                        <div class="wrap">
+
+                            <label class="form-label" for="description">Description:</label><br />
+                            <input type="text" name="description" value="<%= data.content%>" /><br /><br />
+                        </div>
+                    </div>
+
+                    <div class="field-wrap">
+                        <div class="wrap">
+
+                            <label class="form-label" for="file">Image:</label><br />
+                            <input type="file" name="file" value="<%=data.image%>"/><br /><br />
+                        </div>
+                    </div>
+
+                    <input type="submit" class="button-block" />
+                </form>
+            </div>
+        </div>
+    </div>
+  
+</body> 
+
+</html>
